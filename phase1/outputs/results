@@ -1,0 +1,78 @@
+=>All customers data
+
+customer_id customer_name                                      city                                               age        
+----------- -------------------------------------------------- -------------------------------------------------- -----------
+          1 Ravi                                               Hyderabad                                                   25
+          2 Sita                                               Chennai                                                     32
+          3 Arun                                               Hyderabad                                                   28
+
+=>customer who belong to chennai
+
+customer_id customer_name                                      city                                               age        
+----------- -------------------------------------------------- -------------------------------------------------- -----------
+          2 Sita                                               Chennai                                                     32
+
+=>customer with age greater than 25
+
+customer_id customer_name                                      city                                               age        
+----------- -------------------------------------------------- -------------------------------------------------- -----------
+          2 Sita                                               Chennai                                                     32
+          3 Arun                                               Hyderabad                                                   28
+
+=>Show only customer_name and city
+
+customer_name                                      city                                              
+-------------------------------------------------- --------------------------------------------------
+Ravi                                               Hyderabad                                         
+Sita                                               Chennai                                           
+Arun                                               Hyderabad                                         
+
+=>Count customers city-wise
+
+city                                                          
+-------------------------------------------------- -----------
+Chennai                                                      1
+Hyderabad                                                    2
+
+pyspark outputs
+
+all customer details
++-----------+-------------+---------+---+
+|customer_id|customer_name|     city|age|
++-----------+-------------+---------+---+
+|          1|         Ravi|Hyderabad| 25|
+|          2|         Sita|  Chennai| 32|
+|          3|         Arun|Hyderabad| 28|
++-----------+-------------+---------+---+
+
+all customers belong to chennai
++-----------+-------------+-------+---+
+|customer_id|customer_name|   city|age|
++-----------+-------------+-------+---+
+|          2|         Sita|Chennai| 32|
++-----------+-------------+-------+---+
+
+all customers above age 25
++-----------+-------------+---------+---+
+|customer_id|customer_name|     city|age|
++-----------+-------------+---------+---+
+|          2|         Sita|  Chennai| 32|
+|          3|         Arun|Hyderabad| 28|
++-----------+-------------+---------+---+
+
+customer name and city
++-------------+---------+
+|customer_name|     city|
++-------------+---------+
+|         Ravi|Hyderabad|
+|         Sita|  Chennai|
+|         Arun|Hyderabad|
++-------------+---------+
+
+city and count 
++---------+-----+
+|     city|count|
++---------+-----+
+|Hyderabad|    2|
+|  Chennai|    1|
++---------+-----+
