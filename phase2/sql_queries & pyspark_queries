@@ -1,0 +1,44 @@
+#firstly columns available in orders 
+sale_id	customer_id	product_id	sale_date	quantity	total_amount
+
+#columns available in customers
+customer_id	first_name	last_name	email	phone_number	address	city	state	zip_code
+
+#first Query
+Total order amount for each customer
+
+# Initialize Spark session
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import count,sum,col ,avg
+spark = SparkSession.builder.appName('Spark Playground').getOrCreate()
+
+# Load the customers.csv dataset
+customers = spark.read.format('csv').option('header', 'true').load('/samples/customers.csv')
+orders = spark.read.format('csv').option('header', 'true').load('/samples/sales.csv')
+
+#Dropping Null Values
+customers = customers.dropna(subset=["customer_id"])
+orders = orders.dropna(subset=["customer_id"])
+
+=>sql
+SELECT c.customer_id,c.first_name,c.last_name,
+SUM(s.total_amount)
+FROM customers c
+LEFT JOIN sales s
+ON c.customer_id = s.customer_id
+GROUP BY c.customer_id, c.first_name, c.last_name;
+
+=>pyspark
+#Joined Tables using left join
+#for joining we have taken first table.join(table we want to join,primarykey,which join that we want to use)
+
+joined_df = customers.join(orders, "customer_id", "left")
+
+#now grouping using groupby and aggregation we used is sum and coalesce(..., lit(0))  Replaces NULL with 0 to rename we used alias
+
+df = joined_df.groupBy("customer_id", "first_name", "last_name") \
+    .agg(coalesce(sum("total_amount"), lit(0)).alias("total_order_amount"))
+    
+#to print we use display
+
+display(df)
