@@ -8,5 +8,7 @@ df.show()
 df.printSchema()
 -------------------------------------------
 #Identify missing values
+from pyspark.sql.functions import col
 df.filter(col("column").isNull()).show()
 df.filter(col("age").isNull() | col("name").isNull()).show()
+-------------------------------------------------------------
